@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { jsPDF } from "jspdf";
-import autoTable from 'jspdf-autotable'
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +14,7 @@ export class AppComponent implements OnInit {
       {
         orientation: 'p',
         unit: 'mm',
-        format: 'a4',
-        putOnlyUsedFonts:true,
-        hotfixes: ["px_scaling"]
+        format: 'a4'
        }
     );
 
@@ -41,14 +39,14 @@ export class AppComponent implements OnInit {
     doc.addImage(img1, "JPEG", 45, 15, img1.width, img1.height);
     doc.addImage(img2, "JPEG", 120, 15, img2.width, img2.height);
 
-    doc.setFontSize(10);
-    doc.text("Service", 55, 55);
-    doc.text("Services Draeger", 130, 55);
+    document.body.removeChild(img1);
+    document.body.removeChild(img2);
 
-    doc.setFontSize(17);
-    doc.text("Technical Theme", 10, 70);
+    doc.setFontSize(11);
+    doc.text("Service", 55, 50);
+    doc.text("Services Draeger", 130, 50);
 
-    doc.setFontSize(14);
+    doc.setFontSize(13);
     autoTable(doc, {
       styles: { fillColor: [255, 255, 255] },
       theme : 'plain',
@@ -59,8 +57,8 @@ export class AppComponent implements OnInit {
         3: { halign: 'left', fillColor: [255, 255, 255], cellWidth: 38 },
         4: { halign: 'left', fillColor: [255, 255, 255], cellWidth: 38 }
       },
-      head: [['', 'Product', 'Competitor1', 'Competitor2', 'Commment']],
       body: [
+        [{ content: 'Technical Theme', colSpan: 5, styles: { fontSize: 15, fillColor: [230, 230, 230] }}],
         ['Structure',
           'Structured offering including broad portfolio of Third party devices, tested and validated by engineers in the monitoring BU.',
           'david@example.com',
@@ -93,8 +91,7 @@ export class AppComponent implements OnInit {
         ]
       ],
       bodyStyles: {valign: "top"},
-      //alternateRowStyles: {lineWidth: {bottom: 1}},
-      startY: 75
+      startY: 60
     })
 
     doc.save("a4.pdf");
